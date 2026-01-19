@@ -1,0 +1,23 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+int main() {
+  char *input = NULL;
+  size_t input_size = 0;
+  while (1) {
+    printf("Please enter some text: ");
+    ssize_t len = getline(&input, &input_size, stdin);
+
+    char *ptr = NULL;
+    char *token = NULL;
+
+    token = strtok_r(input, " ", &ptr);
+    while (token != NULL) {
+      printf(" %s\n", token);
+      token = strtok_r(NULL, " ", &ptr);
+    }
+    free(input);
+    return 0;
+  }
+}
