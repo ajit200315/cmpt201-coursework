@@ -1,0 +1,53 @@
+#define _POSIX_C_SOURCE 200809L
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+int main() {
+  char *store[5];
+  int store_len = 0;
+  int index = 0;
+
+  for (int i = 0; i < 5; i++) {
+    store[i] = NULL;
+  }
+
+  while (1) {
+    printf("Enter input: ");
+    char *line = NULL;
+    size_t size = 0;
+    ssize_t len = getline(&line, &size, stdin);
+    if (len == -1) {
+      free(line);
+      break;
+    }
+
+    if (store[index] != NULL) {
+      free(store[index]);
+    }
+
+    store[index] = line;
+    index = (index + 1) % 5;
+
+    if (store_len < 5) {
+      store_len++;
+    }
+
+    if (strcmp(line, "print\n") == 0 || strcmp(line, "print") == 0) {
+      int start = index - store_len;
+      if (start < 0) {
+        start += 5;
+      }
+
+      for (int i = 0; i < store_len; i++) {
+        int pos = (start + i) % 5;
+        printf("%s", store[pos]);
+      }
+    }
+  }
+  for (int i = 0; i < 5; i++) {
+    free(store[i]);
+  }
+
+  return 0;
+}
