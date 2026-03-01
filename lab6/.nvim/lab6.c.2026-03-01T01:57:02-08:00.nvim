@@ -1,0 +1,40 @@
+ude <stdbool.h>
+  2 #include <stdint.h>
+  3 #include <stdio.h>
+  4 #include <stdlib.h>
+  5
+  6 #define ASSERT(expr)                                                           \
+  7 ┆ {                                                                            \
+  8 ┆ ┆ if (!(expr)) {                                                             \
+  9 ┆ ┆ ┆ fprintf(stderr, "Assertion failed: %s\n", #expr);                        \
+ 10 ┆ ┆ ┆ exit(1);                                                                 \
+ 11 ┆ ┆ }                                                                          \
+ 12 ┆ }
+ 13
+ 14 #define TEST(expr)                                                             \
+ 15 ┆ {                                                                            \
+ 16 ┆ ┆ if (!(expr)) {                                                             \
+ 17 ┆ ┆ ┆ fprintf(stderr, "Test failed: %s\n", #expr);                             \
+ 18 ┆ ┆ ┆ exit(1);                                                                 \
+ 19 ┆ ┆ } else {                                                                   \
+ 20 ┆ ┆ ┆ printf("Test passed: %s\n", #expr);                                      \
+ 21 ┆ ┆ }                                                                          \
+ 22 ┆ }
+ 23
+ 24 typedef struct node {
+ 25 ┆ uint64_t data;
+ 26 ┆ struct node *next;
+ 27 } node_t;
+ 28
+ 29 node_t *head = NULL;
+ 30
+ 31 void insert_sorted(uint64_t data) {
+ 32 ┆ node_t *new_node = malloc(sizeof(node_t));
+ 33 ┆ new_node->data = data;
+ 34 ┆ new_node->next = NULL;
+ 35 ┆
+ 36 ┆ if (head == NULL) {
+ 37 ┆ ┆ head = new_node;
+ 38 ┆ } else {
+ NORMAL  example_1.c                                                                                                     OK  unix | utf-8 | c    1%    1:1
+
